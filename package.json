@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@biomejs/biome": "@latest",
+    "prisma": "^6.13.0"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  }
+}
