@@ -1,14 +1,15 @@
-import loginUserService from "@/service/loginUserService.js";
+import createUserService from "@/service/auth/createUserService.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-class LoginUserController {
+class CreateUserController {
   async handle(req: FastifyRequest, res: FastifyReply) {
-    const { email, password } = req.body as {
+    const { fullname, email, password } = req.body as {
+      fullname: string;
       email: string;
       password: string;
     };
 
-    if (!email || !password) {
+    if (!fullname || !email || !password) {
       return res.status(400).send({
         error: true,
         message: "All fields are required",
@@ -16,12 +17,13 @@ class LoginUserController {
     }
 
     try {
-      const loginUser = await loginUserService.execute({
+      const user = await createUserService.execute({
+        fullname,
         email,
         password,
       });
 
-      return res.status(200).send(loginUser);
+      return res.status(200).send(user);
     } catch (error) {
       return res.status(400).send({
         error: true,
@@ -32,4 +34,4 @@ class LoginUserController {
   }
 }
 
-export default new LoginUserController();
+export default new CreateUserController();
